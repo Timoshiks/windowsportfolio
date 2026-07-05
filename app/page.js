@@ -441,12 +441,12 @@ export default function Home() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
-            <a href="#visualizer" className="text-ink/80 hover:text-brand transition-colors">Visualizer</a>
-            <a href="#technology" className="text-ink/80 hover:text-brand transition-colors">Technology</a>
-            <a href="#savings" className="text-ink/80 hover:text-brand transition-colors">Savings</a>
-            <a href="#portfolio" className="text-ink/80 hover:text-brand transition-colors">Portfolio</a>
+            <a href="#visualizer" className="text-ink/80 hover:text-brand transition-colors">Конструктор</a>
+            <a href="#technology" className="text-ink/80 hover:text-brand transition-colors">Технологии</a>
+            <a href="#savings" className="text-ink/80 hover:text-brand transition-colors">Экономия</a>
+            <a href="#portfolio" className="text-ink/80 hover:text-brand transition-colors">Портфолио</a>
             <a href="#contact" className="px-5 py-2.5 bg-brand text-canvas rounded-sm hover:bg-brand-dark transition-all shadow-sm shine-effect text-xs font-bold uppercase tracking-wider">
-              Request Config ({width}x{height} mm)
+              Заказать расчет
             </a>
           </nav>
 
@@ -470,28 +470,28 @@ export default function Home() {
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center justify-between border-b border-brand/10 py-3"
             >
-              <span>Visualizer</span> <ChevronRight size={20} className="text-brand" />
+              <span>Конструктор</span> <ChevronRight size={20} className="text-brand" />
             </a>
             <a 
               href="#technology" 
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center justify-between border-b border-brand/10 py-3"
             >
-              <span>Technology</span> <ChevronRight size={20} className="text-brand" />
+              <span>Технологии</span> <ChevronRight size={20} className="text-brand" />
             </a>
             <a 
               href="#savings" 
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center justify-between border-b border-brand/10 py-3"
             >
-              <span>Energy Savings</span> <ChevronRight size={20} className="text-brand" />
+              <span>Экономия энергии</span> <ChevronRight size={20} className="text-brand" />
             </a>
             <a 
               href="#portfolio" 
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center justify-between border-b border-brand/10 py-3"
             >
-              <span>Portfolio</span> <ChevronRight size={20} className="text-brand" />
+              <span>Портфолио</span> <ChevronRight size={20} className="text-brand" />
             </a>
           </nav>
 
@@ -500,7 +500,7 @@ export default function Home() {
             onClick={() => setMobileMenuOpen(false)}
             className="w-full py-4 bg-brand text-canvas rounded-sm text-center font-bold uppercase text-xs tracking-wider shadow-md"
           >
-            Request Config ({width}x{height} mm)
+            Заказать расчет
           </a>
         </div>
       </div>
