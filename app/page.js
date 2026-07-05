@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
 import { 
   Sun, 
@@ -191,6 +191,152 @@ export default function Home() {
       }
       window.scrollTo(0, 0);
     }
+  }, []);
+
+  // Web Audio API refs for noise simulation
+  const audioContextRef = useRef(null);
+  const gainNodeRef = useRef(null);
+  const filterNodeRef = useRef(null);
+  const sourceNodeRef = useRef(null);
+
+  // Helper to generate brown noise buffer (warm low city rumble)
+  const createBrownNoiseBuffer = (ctx) => {
+    const bufferSize = 2 * ctx.sampleRate;
+    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    let lastOut = 0.0;
+    for (let i = 0; i < bufferSize; i++) {
+      const white = Math.random() * 2 - 1;
+      output[i] = (lastOut + (0.02 * white)) / 1.02;
+      lastOut = output[i];
+      output[i] *= 3.5; // boost volume before gain node
+    }
+    return noiseBuffer;
+  };
+
+  // Update audio filter frequency and gain volume smoothly based on the current glazing selection
+  const updateAudioParameters = (ctx, filter, gain) => {
+    if (!ctx || !filter || !gain) return;
+
+    let targetGain = 0.05;
+    let targetFrequency = 400;
+
+    if (glazing.id === "double") {
+      targetGain = 0.08;
+      targetFrequency = 350;
+    } else if (glazing.id === "triple") {
+      targetGain = 0.015;
+      targetFrequency = 110;
+    } else if (glazing.id === "smart") {
+      targetGain = 0.035;
+      targetFrequency = 200;
+    }
+
+    const now = ctx.currentTime;
+    // Smooth transition over 0.5s to make it sound premium
+    filter.frequency.setValueAtTime(filter.frequency.value, now);
+    filter.frequency.exponentialRampToValueAtTime(targetFrequency, now + 0.5);
+
+    gain.gain.setValueAtTime(gain.gain.value, now);
+    gain.gain.linearRampToValueAtTime(targetGain, now + 0.5);
+  };
+
+  const startAudio = () => {
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+
+      const ctx = new AudioContextClass();
+      audioContextRef.current = ctx;
+
+      const buffer = createBrownNoiseBuffer(ctx);
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+      source.loop = true;
+      sourceNodeRef.current = source;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filterNodeRef.current = filter;
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0, ctx.currentTime); // start silent for fade-in
+      gainNodeRef.current = gain;
+
+      source.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+
+      source.start(0);
+
+      updateAudioParameters(ctx, filter, gain);
+    } catch (err) {
+      console.error("Failed to initialize Web Audio:", err);
+    }
+  };
+
+  const stopAudio = () => {
+    const ctx = audioContextRef.current;
+    const gain = gainNodeRef.current;
+    if (ctx && gain) {
+      const now = ctx.currentTime;
+      // Fade out to zero volume over 0.4 seconds
+      gain.gain.setValueAtTime(gain.gain.value, now);
+      gain.gain.linearRampToValueAtTime(0, now + 0.4);
+
+      setTimeout(() => {
+        try {
+          if (sourceNodeRef.current) {
+            sourceNodeRef.current.stop();
+            sourceNodeRef.current.disconnect();
+          }
+          if (filterNodeRef.current) {
+            filterNodeRef.current.disconnect();
+          }
+          if (gainNodeRef.current) {
+            gainNodeRef.current.disconnect();
+          }
+          if (ctx.state !== "closed") {
+            ctx.close();
+          }
+        } catch (e) {}
+        audioContextRef.current = null;
+        gainNodeRef.current = null;
+        filterNodeRef.current = null;
+        sourceNodeRef.current = null;
+      }, 500);
+    }
+  };
+
+  // Sync audio state with simulation toggle and selected glazing type
+  useEffect(() => {
+    if (noiseSimulationActive) {
+      if (!audioContextRef.current) {
+        startAudio();
+      } else {
+        updateAudioParameters(
+          audioContextRef.current,
+          filterNodeRef.current,
+          gainNodeRef.current
+        );
+      }
+    } else {
+      if (audioContextRef.current) {
+        stopAudio();
+      }
+    }
+  }, [noiseSimulationActive, glazing]);
+
+  // Stop audio on component unmount
+  useEffect(() => {
+    return () => {
+      if (audioContextRef.current) {
+        try {
+          sourceNodeRef.current?.stop();
+          audioContextRef.current?.close();
+        } catch (e) {}
+      }
+    };
   }, []);
 
   // Handle header background transition on scroll
