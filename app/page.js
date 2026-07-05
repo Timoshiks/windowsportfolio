@@ -696,7 +696,7 @@ export default function Home() {
                         />
 
                         {/* 2. Panels divider lines (mullions) */}
-                        {panels >= 2 && (
+                        {panels === 2 && (
                           <line 
                             x1="200" 
                             y1={y0} 
