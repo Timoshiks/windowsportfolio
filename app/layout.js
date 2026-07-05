@@ -1,4 +1,5 @@
 import { Inter, Space_Grotesk } from "next/font/google";
+import { Analytics } from '@vercel/analytics/next';
 import "./globals.css";
 
 const inter = Inter({
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} scroll-smooth`}>
       <body className="bg-canvas text-ink font-body antialiased selection:bg-brand/20 selection:text-brand-dark">
         {children}
+        <Analytics />
       </body>
     </html>
   );
