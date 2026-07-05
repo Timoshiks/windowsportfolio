@@ -22,7 +22,9 @@ import {
   Info,
   Layers,
   Thermometer,
-  CloudSun
+  CloudSun,
+  Phone,
+  Mail
 } from "lucide-react";
 
 // Configuration specifications
@@ -152,6 +154,19 @@ export default function Home() {
   const [panels, setPanels] = useState(2); // 1, 2, or 3 panels
   const [smartTintActive, setSmartTintActive] = useState(false);
   const [noiseSimulationActive, setNoiseSimulationActive] = useState(false);
+  const [activeTechModal, setActiveTechModal] = useState(null); // 'rc2' | 'timber' | 'warm-edge' | null
+
+  // Dynamic SVG dimensions for the window drawing
+  const svgWidth = useMemo(() => {
+    return 140 + ((width - 1200) / (4000 - 1200)) * 220; // 140 to 360
+  }, [width]);
+
+  const svgHeight = useMemo(() => {
+    return 120 + ((height - 1200) / (3000 - 1200)) * 140; // 120 to 260
+  }, [height]);
+
+  const x0 = useMemo(() => 200 - svgWidth / 2, [svgWidth]);
+  const y0 = useMemo(() => 150 - svgHeight / 2, [svgHeight]);
 
   // Calculator States
   const [climate, setClimate] = useState(CLIMATES.nordic);
@@ -161,7 +176,7 @@ export default function Home() {
   // Contact Form States
   const [formState, setFormState] = useState({
     name: "",
-    email: "",
+    phone: "",
     projectType: "Residential Custom",
     message: "",
     area: "20-50 m²"
@@ -208,7 +223,7 @@ export default function Home() {
     // Weight Calculation: glass density ~2.5 kg/m²/mm of thickness.
     // Glass covers roughly 90% of area. Frame contributes weight too.
     const areaSqM = (width / 1000) * (height / 1000);
-    // Rough glass weight = area * glass thickness * 2.5 kg.
+    // Rough glass weight = area * glass thickness * 2.2 kg.
     // Frame weight = frame weight modifier * perimeter (meters)
     const perimeterM = ((width + height) * 2) / 1000;
     const glassWeight = areaSqM * glazing.glassThickness * 2.2;
@@ -252,7 +267,7 @@ export default function Home() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (formState.name && formState.email) {
+    if (formState.name && formState.phone) {
       setFormSubmitted(true);
     }
   };
@@ -657,25 +672,25 @@ export default function Home() {
                     <div className="absolute inset-0 flex items-center justify-center">
                       <svg 
                         viewBox="0 0 400 320" 
-                        className="w-full h-full drop-shadow-md transition-all duration-500"
+                        className="w-full h-full drop-shadow-md transition-all duration-300"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         {/* 1. Glazing glass layer (colored by selection and state) */}
                         <rect
-                          x="30"
-                          y="30"
-                          width="340"
-                          height="260"
+                          x={x0 + 6}
+                          y={y0 + 6}
+                          width={svgWidth - 12}
+                          height={svgHeight - 12}
                           rx="4"
                           fill={glazing.id === "smart" && smartTintActive ? glazing.glassColorTinted : glazing.glassColor}
-                          className="transition-all duration-700 ease-in-out"
+                          className="transition-fill duration-700 ease-in-out"
                         />
                         
                         {/* Glass Reflections details */}
                         <path 
-                          d="M100,50 L200,270 M150,50 L230,270" 
+                          d={`M${x0 + 30},${y0 + 20} L${x0 + Math.min(svgWidth - 30, 180)},${y0 + svgHeight - 20} M${x0 + 60},${y0 + 20} L${x0 + Math.min(svgWidth - 30, 210)},${y0 + svgHeight - 20}`} 
                           stroke="rgba(255,255,255,0.18)" 
-                          strokeWidth="6" 
+                          strokeWidth="5" 
                           strokeLinecap="round" 
                           className="pointer-events-none"
                         />
@@ -684,56 +699,56 @@ export default function Home() {
                         {panels >= 2 && (
                           <line 
                             x1="200" 
-                            y1="30" 
+                            y1={y0} 
                             x2="200" 
-                            y2="290" 
+                            y2={y0 + svgHeight} 
                             stroke={frame.hex} 
-                            strokeWidth="10" 
-                            className="transition-colors duration-500"
+                            strokeWidth="8" 
+                            className="transition-all duration-300"
                           />
                         )}
                         {panels === 3 && (
                           <>
                             <line 
-                              x1="113.3" 
-                              y1="30" 
-                              x2="113.3" 
-                              y2="290" 
+                              x1={x0 + svgWidth / 3} 
+                              y1={y0} 
+                              x2={x0 + svgWidth / 3} 
+                              y2={y0 + svgHeight} 
                               stroke={frame.hex} 
-                              strokeWidth="10" 
-                              className="transition-colors duration-500"
+                              strokeWidth="8" 
+                              className="transition-all duration-300"
                             />
                             <line 
-                              x1="286.6" 
-                              y1="30" 
-                              x2="286.6" 
-                              y2="290" 
+                              x1={x0 + (2 * svgWidth) / 3} 
+                              y1={y0} 
+                              x2={x0 + (2 * svgWidth) / 3} 
+                              y2={y0 + svgHeight} 
                               stroke={frame.hex} 
-                              strokeWidth="10" 
-                              className="transition-colors duration-500"
+                              strokeWidth="8" 
+                              className="transition-all duration-300"
                             />
                           </>
                         )}
 
-                        {/* 3. Solid profile wooden/aluminum perimeter frame */}
+                        {/* 3. Solid profile perimeter frame */}
                         <rect
-                          x="25"
-                          y="25"
-                          width="350"
-                          height="270"
+                          x={x0}
+                          y={y0}
+                          width={svgWidth}
+                          height={svgHeight}
                           rx="4"
                           fill="none"
                           stroke={frame.hex}
                           strokeWidth="12"
-                          className="transition-all duration-500"
+                          className="transition-all duration-300"
                         />
 
-                        {/* Inner metal bead gasket details */}
+                        {/* Inner bead details */}
                         <rect
-                          x="31"
-                          y="31"
-                          width="338"
-                          height="258"
+                          x={x0 + 6}
+                          y={y0 + 6}
+                          width={svgWidth - 12}
+                          height={svgHeight - 12}
                           rx="2"
                           fill="none"
                           stroke="rgba(28,34,30,0.12)"
@@ -743,26 +758,41 @@ export default function Home() {
 
                         {/* Dynamic Dimension lines */}
                         {/* Bottom Width line */}
-                        <line x1="25" y1="312" x2="375" y2="312" stroke="#566E5D" strokeWidth="1" strokeDasharray="3 3" />
-                        <line x1="25" y1="308" x2="25" y2="316" stroke="#566E5D" strokeWidth="1.5" />
-                        <line x1="375" y1="308" x2="375" y2="316" stroke="#566E5D" strokeWidth="1.5" />
+                        <line x1={x0} y1={y0 + svgHeight + 25} x2={x0 + svgWidth} y2={y0 + svgHeight + 25} stroke="#566E5D" strokeWidth="1" strokeDasharray="3 3" />
+                        <line x1={x0} y1={y0 + svgHeight + 21} x2={x0} y2={y0 + svgHeight + 29} stroke="#566E5D" strokeWidth="1.5" />
+                        <line x1={x0 + svgWidth} y1={y0 + svgHeight + 21} x2={x0 + svgWidth} y2={y0 + svgHeight + 29} stroke="#566E5D" strokeWidth="1.5" />
                         
                         {/* Left Height line */}
-                        <line x1="12" y1="25" x2="12" y2="295" stroke="#566E5D" strokeWidth="1" strokeDasharray="3 3" />
-                        <line x1="8" y1="25" x2="16" y2="25" stroke="#566E5D" strokeWidth="1.5" />
-                        <line x1="8" y1="295" x2="16" y2="295" stroke="#566E5D" strokeWidth="1.5" />
+                        <line x1={x0 - 18} y1={y0} x2={x0 - 18} y2={y0 + svgHeight} stroke="#566E5D" strokeWidth="1" strokeDasharray="3 3" />
+                        <line x1={x0 - 22} y1={y0} x2={x0 - 14} y2={y0} stroke="#566E5D" strokeWidth="1.5" />
+                        <line x1={x0 - 22} y1={y0 + svgHeight} x2={x0 - 14} y2={y0 + svgHeight} stroke="#566E5D" strokeWidth="1.5" />
+
+                        {/* Width & Height labels inside the SVG canvas for perfect centering */}
+                        <text
+                          x="200"
+                          y={y0 + svgHeight + 38}
+                          fill="#566E5D"
+                          fontSize="10"
+                          fontFamily="monospace"
+                          fontWeight="bold"
+                          textAnchor="middle"
+                        >
+                          {width} мм
+                        </text>
+
+                        <text
+                          x={x0 - 28}
+                          y="150"
+                          fill="#566E5D"
+                          fontSize="10"
+                          fontFamily="monospace"
+                          fontWeight="bold"
+                          textAnchor="middle"
+                          transform={`rotate(-90, ${x0 - 28}, 150)`}
+                        >
+                          {height} мм
+                        </text>
                       </svg>
-                      
-                      {/* Dynamic Dimension Text Overlays */}
-                      {/* Width label (centered bottom) */}
-                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-canvas px-2.5 py-0.5 rounded-full border border-brand/10 text-[10px] font-mono font-bold text-brand shadow-sm">
-                        {width} mm
-                      </div>
-                      
-                      {/* Height label (centered left) */}
-                      <div className="absolute left-[-20px] top-1/2 transform -translate-y-1/2 -rotate-90 bg-canvas px-2.5 py-0.5 rounded-full border border-brand/10 text-[10px] font-mono font-bold text-brand shadow-sm">
-                        {height} mm
-                      </div>
                     </div>
                   </div>
 
@@ -899,14 +929,17 @@ export default function Home() {
               <div className="w-12 h-12 bg-brand-light text-brand flex items-center justify-center rounded-sm mb-6">
                 <Shield size={22} />
               </div>
-              <h3 className="font-heading text-xl font-bold text-ink mb-3">Concealed Locking Hardware</h3>
+              <h3 className="font-heading text-xl font-bold text-ink mb-3">Скрытая запорная фурнитура</h3>
               <p className="text-sm text-ink/75 leading-relaxed">
-                All hinges, locking systems, and structural pivots are fully integrated within the sash frame. Zero visible brackets on the interior, leaving flush timber surfaces uninterrupted.
+                Все петли, замки и поворотные механизмы полностью интегрированы в раму. Никаких видимых кронштейнов изнутри, что сохраняет ровную поверхность дерева непрерывной.
               </p>
-              <div className="mt-6 flex items-center gap-1.5 text-xs text-brand font-semibold">
-                <span>RC2 Security Certified</span>
+              <button 
+                onClick={() => setActiveTechModal('rc2')}
+                className="mt-6 flex items-center gap-1.5 text-xs text-brand font-semibold hover:text-brand-dark transition-colors cursor-pointer text-left"
+              >
+                <span>RC2 Безопасность Сертифицирована</span>
                 <ChevronRight size={14} />
-              </div>
+              </button>
             </div>
 
             {/* Tech 2 */}
@@ -914,14 +947,17 @@ export default function Home() {
               <div className="w-12 h-12 bg-brand-light text-brand flex items-center justify-center rounded-sm mb-6">
                 <TreePine size={22} />
               </div>
-              <h3 className="font-heading text-xl font-bold text-ink mb-3">Sustainable Dense Timber Core</h3>
+              <h3 className="font-heading text-xl font-bold text-ink mb-3">Прочное и экологичное ядро</h3>
               <p className="text-sm text-ink/75 leading-relaxed">
-                We select slow-grown Swedish pine and premium oak with extremely dense growth ring structures. Oiled and vacuum-impregnated to prevent warp and thermal thermal degradation over decades.
+                Мы отбираем медленно растущую шведскую сосну и дуб с высокой плотностью годовых колец. Масло и вакуумная пропитка защищают дерево от деформаций и термической деградации в течение десятилетий.
               </p>
-              <div className="mt-6 flex items-center gap-1.5 text-xs text-brand font-semibold">
-                <span>PEFC &amp; FSC Certified Wood</span>
+              <button 
+                onClick={() => setActiveTechModal('timber')}
+                className="mt-6 flex items-center gap-1.5 text-xs text-brand font-semibold hover:text-brand-dark transition-colors cursor-pointer text-left"
+              >
+                <span>PEFC &amp; FSC Сертифицированная древесина</span>
                 <ChevronRight size={14} />
-              </div>
+              </button>
             </div>
 
             {/* Tech 3 */}
@@ -929,14 +965,17 @@ export default function Home() {
               <div className="w-12 h-12 bg-brand-light text-brand flex items-center justify-center rounded-sm mb-6">
                 <Layers size={22} />
               </div>
-              <h3 className="font-heading text-xl font-bold text-ink mb-3">Hybrid Thermal Spacers</h3>
+              <h3 className="font-heading text-xl font-bold text-ink mb-3">Гибридные терморазрывы</h3>
               <p className="text-sm text-ink/75 leading-relaxed">
-                Multi-pane glass units use non-conductive polymer composite spacer bars instead of cold aluminum. This isolates internal air spaces, eliminating edge condensation and frost transfer.
+                В многокамерных стеклопакетах используются композитные дистанционные рамки вместо холодного алюминия. Это устраняет мостики холода, предотвращая появление конденсата по краям.
               </p>
-              <div className="mt-6 flex items-center gap-1.5 text-xs text-brand font-semibold">
-                <span>WARM-EDGE Technology</span>
+              <button 
+                onClick={() => setActiveTechModal('warm-edge')}
+                className="mt-6 flex items-center gap-1.5 text-xs text-brand font-semibold hover:text-brand-dark transition-colors cursor-pointer text-left"
+              >
+                <span>Технологии ТЕПЛОГО ЭДЖ</span>
                 <ChevronRight size={14} />
-              </div>
+              </button>
             </div>
 
           </div>
@@ -1215,22 +1254,51 @@ export default function Home() {
             {/* Form info */}
             <div className="lg:col-span-5 flex flex-col justify-between h-full">
               <div>
-                <span className="text-xs font-semibold text-accent uppercase tracking-wider block mb-3">Architectural Consultation</span>
+                <span className="text-xs font-semibold text-accent uppercase tracking-wider block mb-3">Архитектурная Консультация</span>
                 <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight mb-6">
-                  Initiate your bespoke glazing specification.
+                  Начните проектирование вашей спецификации остекления.
                 </h2>
                 <p className="text-base text-ink/80 leading-relaxed mb-8">
-                  Submit your sizing demands or blueprint details. Our architectural advisory team will compile detailed structural feasibility and performance specs.
+                  Отправьте ваши размеры или детали чертежа. Наша команда архитекторов подготовит подробное технико-экономическое обоснование и спецификацию.
                 </p>
               </div>
 
               <div className="flex flex-col gap-6 border-t border-brand/10 pt-8">
+                {/* Phone & Messengers */}
+                <div className="flex items-start gap-4">
+                  <div className="p-2.5 bg-white border border-brand/10 rounded-sm text-brand">
+                    <Phone size={18} />
+                  </div>
+                  <div>
+                    <span className="text-xs uppercase font-bold text-ink/50 block">Связаться с нами</span>
+                    <div className="flex flex-col gap-1 mt-1 text-sm font-semibold">
+                      <a href="tel:+74951234567" className="hover:text-brand transition-colors text-ink">+7 (495) 123-45-67</a>
+                      <div className="flex items-center gap-3 mt-1 text-[11px] font-bold text-brand uppercase tracking-wider">
+                        <a href="https://t.me/vindo_glazing" target="_blank" rel="noopener noreferrer" className="hover:text-brand-dark transition-colors">Telegram</a>
+                        <span className="text-ink/20">|</span>
+                        <a href="https://wa.me/79991234567" target="_blank" rel="noopener noreferrer" className="hover:text-brand-dark transition-colors">WhatsApp</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div className="flex items-start gap-4">
+                  <div className="p-2.5 bg-white border border-brand/10 rounded-sm text-brand">
+                    <Mail size={18} />
+                  </div>
+                  <div>
+                    <span className="text-xs uppercase font-bold text-ink/50 block">Написать на почту</span>
+                    <a href="mailto:info@vindo.se" className="text-sm font-semibold text-ink hover:text-brand transition-colors block mt-1">info@vindo.se</a>
+                  </div>
+                </div>
+
                 <div className="flex items-start gap-4">
                   <div className="p-2.5 bg-white border border-brand/10 rounded-sm text-brand">
                     <MapPin size={18} />
                   </div>
                   <div>
-                    <span className="text-xs uppercase font-bold text-ink/50 block">HQ Office</span>
+                    <span className="text-xs uppercase font-bold text-ink/50 block">Головной офис</span>
                     <span className="text-sm font-semibold text-ink">Skeppsbron 14, 111 30 Stockholm, Sweden</span>
                   </div>
                 </div>
@@ -1240,7 +1308,7 @@ export default function Home() {
                     <Building size={18} />
                   </div>
                   <div>
-                    <span className="text-xs uppercase font-bold text-ink/50 block">Glazing Factory</span>
+                    <span className="text-xs uppercase font-bold text-ink/50 block">Завод остекления</span>
                     <span className="text-sm font-semibold text-ink">Vindö Industriväg 4, Gustavsberg</span>
                   </div>
                 </div>
@@ -1257,29 +1325,29 @@ export default function Home() {
                     {/* Name */}
                     <div className="flex flex-col">
                       <label className="text-[11px] uppercase font-bold text-brand mb-2">
-                        Contact Name
+                        Ваше имя
                       </label>
                       <input 
                         type="text" 
                         required
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                        placeholder="e.g. Erik Larsson"
+                        placeholder="например, Эрик Ларссон"
                         className="w-full px-4 py-3 bg-canvas border border-ink/10 focus:border-brand focus:outline-none text-sm text-ink rounded-sm"
                       />
                     </div>
 
-                    {/* Email */}
+                    {/* Phone */}
                     <div className="flex flex-col">
                       <label className="text-[11px] uppercase font-bold text-brand mb-2">
-                        Email Address
+                        Номер телефона
                       </label>
                       <input 
-                        type="email" 
+                        type="tel" 
                         required
-                        value={formState.email}
-                        onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                        placeholder="e.g. erik@architect.se"
+                        value={formState.phone}
+                        onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
+                        placeholder="например, +7 (999) 123-45-67"
                         className="w-full px-4 py-3 bg-canvas border border-ink/10 focus:border-brand focus:outline-none text-sm text-ink rounded-sm"
                       />
                     </div>
@@ -1289,34 +1357,34 @@ export default function Home() {
                     {/* Project Area Scope */}
                     <div className="flex flex-col">
                       <label className="text-[11px] uppercase font-bold text-brand mb-2">
-                        Approx Glazing Area
+                        Площадь остекления
                       </label>
                       <select 
                         value={formState.area}
                         onChange={(e) => setFormState({ ...formState, area: e.target.value })}
                         className="w-full px-4 py-3 bg-canvas border border-ink/10 focus:border-brand focus:outline-none text-sm text-ink rounded-sm appearance-none"
                       >
-                        <option>Under 20 m²</option>
-                        <option>20-50 m²</option>
-                        <option>50-100 m²</option>
-                        <option>100m² + (Grand Residence)</option>
+                        <option>До 20 м²</option>
+                        <option>20-50 м²</option>
+                        <option>50-100 м²</option>
+                        <option>Более 100 м² (Большая резиденция)</option>
                       </select>
                     </div>
 
                     {/* Project Category */}
                     <div className="flex flex-col">
                       <label className="text-[11px] uppercase font-bold text-brand mb-2">
-                        Project Category
+                        Категория проекта
                       </label>
                       <select 
                         value={formState.projectType}
                         onChange={(e) => setFormState({ ...formState, projectType: e.target.value })}
                         className="w-full px-4 py-3 bg-canvas border border-ink/10 focus:border-brand focus:outline-none text-sm text-ink rounded-sm appearance-none"
                       >
-                        <option>Residential Custom</option>
-                        <option>Luxe Commercial</option>
-                        <option>Historical Renovation</option>
-                        <option>New Villa Construction</option>
+                        <option>Индивидуальный жилой дом</option>
+                        <option>Коммерческая недвижимость</option>
+                        <option>Историческая реновация</option>
+                        <option>Строительство виллы</option>
                       </select>
                     </div>
                   </div>
@@ -1324,13 +1392,13 @@ export default function Home() {
                   {/* Blueprint details */}
                   <div className="flex flex-col">
                     <label className="text-[11px] uppercase font-bold text-brand mb-2">
-                      Specific Architectural Requirements / Sizes
+                      Архитектурные требования / Размеры
                     </label>
                     <textarea 
                       rows="4"
                       value={formState.message}
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                      placeholder="Detail frame core choice, custom sizes, or specific climate constraints..."
+                      placeholder="Укажите тип рамы, размеры или другие требования..."
                       className="w-full px-4 py-3 bg-canvas border border-ink/10 focus:border-brand focus:outline-none text-sm text-ink rounded-sm resize-none"
                     />
                   </div>
@@ -1340,7 +1408,7 @@ export default function Home() {
                     <div className="flex items-center gap-2">
                       <Ruler size={16} className="text-brand" />
                       <span className="text-ink/80">
-                        Attaching current active simulator specs: <strong>{width}x{height}mm, {frame.name}, {glazing.name}</strong>
+                        Прикреплены параметры конфигуратора: <strong>{width}x{height}мм, {frame.name}, {glazing.name}</strong>
                       </span>
                     </div>
                   </div>
@@ -1350,7 +1418,7 @@ export default function Home() {
                     type="submit"
                     className="w-full py-4 bg-brand text-canvas font-bold uppercase tracking-wider rounded-sm hover:bg-brand-dark transition-all duration-300 flex items-center justify-center gap-2 shadow-sm shine-effect"
                   >
-                    <span>Submit Specification Request</span>
+                    <span>Отправить запрос спецификации</span>
                     <Send size={14} />
                   </button>
 
@@ -1361,26 +1429,26 @@ export default function Home() {
                   <div className="w-16 h-16 bg-brand/10 text-brand rounded-full flex items-center justify-center mb-6">
                     <CheckCircle2 size={36} />
                   </div>
-                  <h3 className="font-heading text-2xl font-bold text-ink mb-2">Specification Submitted</h3>
+                  <h3 className="font-heading text-2xl font-bold text-ink mb-2">Запрос спецификации отправлен</h3>
                   <p className="text-sm text-ink/75 max-w-md mb-8">
-                    Thank you, {formState.name}. We have logged your request under ticket <strong>#VD-{Math.floor(100000 + Math.random() * 900000)}</strong>. An architectural expert will follow up within 24 business hours.
+                    Спасибо, {formState.name}. Ваша заявка зарегистрирована под номером <strong>#VD-{Math.floor(100000 + Math.random() * 900000)}</strong>. Наш ведущий архитектор свяжется с вами по телефону в течение 24 часов.
                   </p>
 
                   <div className="bg-canvas border border-brand/10 p-6 rounded-sm w-full max-w-md text-left text-xs mb-8 flex flex-col gap-3">
                     <div className="flex justify-between border-b border-brand/5 pb-2">
-                      <span className="text-ink/50 font-bold uppercase">Client</span>
-                      <span className="font-semibold text-ink">{formState.name} ({formState.email})</span>
+                      <span className="text-ink/50 font-bold uppercase">Заказчик</span>
+                      <span className="font-semibold text-ink">{formState.name} ({formState.phone})</span>
                     </div>
                     <div className="flex justify-between border-b border-brand/5 pb-2">
-                      <span className="text-ink/50 font-bold uppercase">Area Scope</span>
+                      <span className="text-ink/50 font-bold uppercase">Объем остекления</span>
                       <span className="font-semibold text-ink">{formState.area}</span>
                     </div>
                     <div className="flex justify-between border-b border-brand/5 pb-2">
-                      <span className="text-ink/50 font-bold uppercase">Frame System</span>
-                      <span className="font-semibold text-ink">{frame.name} ({width} x {height} mm)</span>
+                      <span className="text-ink/50 font-bold uppercase">Профиль рамы</span>
+                      <span className="font-semibold text-ink">{frame.name} ({width} x {height} мм)</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-ink/50 font-bold uppercase">Glazing System</span>
+                      <span className="text-ink/50 font-bold uppercase">Система остекления</span>
                       <span className="font-semibold text-ink">{glazing.name}</span>
                     </div>
                   </div>
@@ -1388,11 +1456,11 @@ export default function Home() {
                   <button
                     onClick={() => {
                       setFormSubmitted(false);
-                      setFormState({ name: "", email: "", projectType: "Residential Custom", message: "", area: "20-50 m²" });
+                      setFormState({ name: "", phone: "", projectType: "Residential Custom", message: "", area: "20-50 m²" });
                     }}
                     className="px-6 py-2.5 border border-brand text-brand hover:bg-brand hover:text-canvas text-xs font-bold uppercase tracking-wider rounded-sm transition-all"
                   >
-                    Configure Another Specification
+                    Создать новую спецификацию
                   </button>
                 </div>
               )}
@@ -1482,6 +1550,118 @@ export default function Home() {
 
         </div>
       </footer>
+
+      {/* Dynamic Technology Details Modal Overlay */}
+      {activeTechModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/50 backdrop-blur-sm animate-fade-in" onClick={() => setActiveTechModal(null)}>
+          <div className="bg-canvas border border-brand/20 p-6 md:p-8 rounded-sm max-w-lg w-full shadow-lg relative animate-scale-up" onClick={(e) => e.stopPropagation()}>
+            <button 
+              onClick={() => setActiveTechModal(null)} 
+              className="absolute top-4 right-4 p-1.5 text-ink/40 hover:text-brand hover:bg-brand-light transition-all rounded-sm"
+              aria-label="Закрыть"
+            >
+              <X size={18} />
+            </button>
+            
+            {activeTechModal === 'rc2' && (
+              <div>
+                <div className="w-10 h-10 bg-brand-light text-brand flex items-center justify-center rounded-sm mb-5">
+                  <Shield size={20} />
+                </div>
+                <h3 className="font-heading text-xl font-bold text-ink mb-3">Сертификация взломостойкости RC2</h3>
+                <p className="text-sm text-ink/75 leading-relaxed mb-5">
+                  Класс защиты RC2 (Resistance Class 2) гарантирует, что оконная конструкция способна противостоять попыткам взлома с использованием инструментов (отвертки, плоскогубцы, клинья) в течение как минимум 3 минут непрерывного физического воздействия.
+                </p>
+                <ul className="text-xs text-ink/70 flex flex-col gap-2">
+                  <li className="flex items-start gap-2">
+                    <Check size={14} className="text-brand shrink-0 mt-0.5" />
+                    <span>Противовзломные цапфы грибовидной формы по всему периметру створки.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check size={14} className="text-brand shrink-0 mt-0.5" />
+                    <span>Ручка со встроенным замком и защитой от высверливания снаружи.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check size={14} className="text-brand shrink-0 mt-0.5" />
+                    <span>Усиленное стальное армирование внутренней части рамы и створки.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check size={14} className="text-brand shrink-0 mt-0.5" />
+                    <span>Специальная вклейка стеклопакета в створку для предотвращения выдавливания.</span>
+                  </li>
+                </ul>
+              </div>
+            )}
+
+            {activeTechModal === 'timber' && (
+              <div>
+                <div className="w-10 h-10 bg-brand-light text-brand flex items-center justify-center rounded-sm mb-5">
+                  <TreePine size={20} />
+                </div>
+                <h3 className="font-heading text-xl font-bold text-ink mb-3">Экологичная древесина PEFC &amp; FSC</h3>
+                <p className="text-sm text-ink/75 leading-relaxed mb-5">
+                  Сертификаты PEFC (Programme for the Endorsement of Forest Certification) и FSC (Forest Stewardship Council) гарантируют строгое экологическое соответствие и восстановление лесных ресурсов.
+                </p>
+                <ul className="text-xs text-ink/70 flex flex-col gap-2">
+                  <li className="flex items-start gap-2">
+                    <Check size={14} className="text-brand shrink-0 mt-0.5" />
+                    <span>Заготовка леса ведется исключительно в восполняемых скандинавских лесничествах.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check size={14} className="text-brand shrink-0 mt-0.5" />
+                    <span>100% отслеживаемость цепочки поставок сырья от лесопилки до производства.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check size={14} className="text-brand shrink-0 mt-0.5" />
+                    <span>Использование северной сосны и дуба с высокой плотностью годовых колец.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check size={14} className="text-brand shrink-0 mt-0.5" />
+                    <span>Вакуумная импрегнация натуральными защитными составами без вредных растворителей.</span>
+                  </li>
+                </ul>
+              </div>
+            )}
+
+            {activeTechModal === 'warm-edge' && (
+              <div>
+                <div className="w-10 h-10 bg-brand-light text-brand flex items-center justify-center rounded-sm mb-5">
+                  <Layers size={20} />
+                </div>
+                <h3 className="font-heading text-xl font-bold text-ink mb-3">Технология Теплого Края (Warm-Edge)</h3>
+                <p className="text-sm text-ink/75 leading-relaxed mb-5">
+                  Технология «Теплого края» заменяет стандартную алюминиевую дистанционную рамку в стеклопакете на композитную полимерную с исключительно низкой теплопроводностью.
+                </p>
+                <ul className="text-xs text-ink/70 flex flex-col gap-2">
+                  <li className="flex items-start gap-2">
+                    <Check size={14} className="text-brand shrink-0 mt-0.5" />
+                    <span>Сокращение теплопотерь по периметру стеклопакета более чем на 70%.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check size={14} className="text-brand shrink-0 mt-0.5" />
+                    <span>Снижение общего коэффициента теплопередачи окна (U-value) на 10-12%.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check size={14} className="text-brand shrink-0 mt-0.5" />
+                    <span>Устранение мостиков холода и выпадения конденсата в краевой зоне стекол.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check size={14} className="text-brand shrink-0 mt-0.5" />
+                    <span>Надежная герметизация, предотвращающая утечку аргона из камер стеклопакета.</span>
+                  </li>
+                </ul>
+              </div>
+            )}
+            
+            <button 
+              onClick={() => setActiveTechModal(null)}
+              className="w-full mt-6 py-2.5 bg-brand text-canvas font-bold uppercase text-xs tracking-wider rounded-sm hover:bg-brand-dark transition-colors"
+            >
+              Закрыть окно
+            </button>
+          </div>
+        </div>
+      )}
 
     </div>
   );
