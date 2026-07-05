@@ -1075,15 +1075,15 @@ export default function Home() {
               <div className="w-12 h-12 bg-brand-light text-brand flex items-center justify-center rounded-sm mb-6">
                 <Shield size={22} />
               </div>
-              <h3 className="font-heading text-xl font-bold text-ink mb-3">Скрытая запорная фурнитура</h3>
+              <h3 className="font-heading text-xl font-bold text-ink mb-3">Concealed Locking Hardware</h3>
               <p className="text-sm text-ink/75 leading-relaxed">
-                Все петли, замки и поворотные механизмы полностью интегрированы в раму. Никаких видимых кронштейнов изнутри, что сохраняет ровную поверхность дерева непрерывной.
+                All hinges, locking systems, and structural pivots are fully integrated within the sash frame. Zero visible brackets on the interior, leaving flush timber surfaces uninterrupted.
               </p>
               <button 
                 onClick={() => setActiveTechModal('rc2')}
                 className="mt-6 flex items-center gap-1.5 text-xs text-brand font-semibold hover:text-brand-dark transition-colors cursor-pointer text-left"
               >
-                <span>RC2 Безопасность Сертифицирована</span>
+                <span>RC2 Security Certified</span>
                 <ChevronRight size={14} />
               </button>
             </div>
@@ -1093,15 +1093,15 @@ export default function Home() {
               <div className="w-12 h-12 bg-brand-light text-brand flex items-center justify-center rounded-sm mb-6">
                 <TreePine size={22} />
               </div>
-              <h3 className="font-heading text-xl font-bold text-ink mb-3">Прочное и экологичное ядро</h3>
+              <h3 className="font-heading text-xl font-bold text-ink mb-3">Sustainable Dense Timber Core</h3>
               <p className="text-sm text-ink/75 leading-relaxed">
-                Мы отбираем медленно растущую шведскую сосну и дуб с высокой плотностью годовых колец. Масло и вакуумная пропитка защищают дерево от деформаций и термической деградации в течение десятилетий.
+                We select slow-grown Swedish pine and premium oak with extremely dense growth ring structures. Oiled and vacuum-impregnated to prevent warp and thermal degradation over decades.
               </p>
               <button 
                 onClick={() => setActiveTechModal('timber')}
                 className="mt-6 flex items-center gap-1.5 text-xs text-brand font-semibold hover:text-brand-dark transition-colors cursor-pointer text-left"
               >
-                <span>PEFC &amp; FSC Сертифицированная древесина</span>
+                <span>PEFC &amp; FSC Certified Wood</span>
                 <ChevronRight size={14} />
               </button>
             </div>
@@ -1111,15 +1111,15 @@ export default function Home() {
               <div className="w-12 h-12 bg-brand-light text-brand flex items-center justify-center rounded-sm mb-6">
                 <Layers size={22} />
               </div>
-              <h3 className="font-heading text-xl font-bold text-ink mb-3">Гибридные терморазрывы</h3>
+              <h3 className="font-heading text-xl font-bold text-ink mb-3">Hybrid Thermal Spacers</h3>
               <p className="text-sm text-ink/75 leading-relaxed">
-                В многокамерных стеклопакетах используются композитные дистанционные рамки вместо холодного алюминия. Это устраняет мостики холода, предотвращая появление конденсата по краям.
+                Multi-pane glass units use non-conductive polymer composite spacer bars instead of cold aluminum. This isolates internal air spaces, eliminating edge condensation and frost transfer.
               </p>
               <button 
                 onClick={() => setActiveTechModal('warm-edge')}
                 className="mt-6 flex items-center gap-1.5 text-xs text-brand font-semibold hover:text-brand-dark transition-colors cursor-pointer text-left"
               >
-                <span>Технологии ТЕПЛОГО ЭДЖ</span>
+                <span>WARM-EDGE Technology</span>
                 <ChevronRight size={14} />
               </button>
             </div>
@@ -1400,12 +1400,12 @@ export default function Home() {
             {/* Form info */}
             <div className="lg:col-span-5 flex flex-col justify-between h-full">
               <div>
-                <span className="text-xs font-semibold text-accent uppercase tracking-wider block mb-3">Архитектурная Консультация</span>
+                <span className="text-xs font-semibold text-accent uppercase tracking-wider block mb-3">Architectural Consultation</span>
                 <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight mb-6">
-                  Начните проектирование вашей спецификации остекления.
+                  Initiate your bespoke glazing specification.
                 </h2>
                 <p className="text-base text-ink/80 leading-relaxed mb-8">
-                  Отправьте ваши размеры или детали чертежа. Наша команда архитекторов подготовит подробное технико-экономическое обоснование и спецификацию.
+                  Submit your sizing demands or blueprint details. Our architectural advisory team will compile detailed structural feasibility and performance specs.
                 </p>
               </div>
 
@@ -1416,13 +1416,13 @@ export default function Home() {
                     <Phone size={18} />
                   </div>
                   <div>
-                    <span className="text-xs uppercase font-bold text-ink/50 block">Связаться с нами</span>
+                    <span className="text-xs uppercase font-bold text-ink/50 block">Contact us</span>
                     <div className="flex flex-col gap-1 mt-1 text-sm font-semibold">
-                      <a href="tel:+74951234567" className="hover:text-brand transition-colors text-ink">+7 (495) 123-45-67</a>
+                      <a href="tel:+4681234567" className="hover:text-brand transition-colors text-ink">+46 (8) 123-45-67</a>
                       <div className="flex items-center gap-3 mt-1 text-[11px] font-bold text-brand uppercase tracking-wider">
                         <a href="https://t.me/vindo_glazing" target="_blank" rel="noopener noreferrer" className="hover:text-brand-dark transition-colors">Telegram</a>
                         <span className="text-ink/20">|</span>
-                        <a href="https://wa.me/79991234567" target="_blank" rel="noopener noreferrer" className="hover:text-brand-dark transition-colors">WhatsApp</a>
+                        <a href="https://wa.me/4681234567" target="_blank" rel="noopener noreferrer" className="hover:text-brand-dark transition-colors">WhatsApp</a>
                       </div>
                     </div>
                   </div>
@@ -1434,7 +1434,7 @@ export default function Home() {
                     <Mail size={18} />
                   </div>
                   <div>
-                    <span className="text-xs uppercase font-bold text-ink/50 block">Написать на почту</span>
+                    <span className="text-xs uppercase font-bold text-ink/50 block">Write Email</span>
                     <a href="mailto:info@vindo.se" className="text-sm font-semibold text-ink hover:text-brand transition-colors block mt-1">info@vindo.se</a>
                   </div>
                 </div>
@@ -1444,7 +1444,7 @@ export default function Home() {
                     <MapPin size={18} />
                   </div>
                   <div>
-                    <span className="text-xs uppercase font-bold text-ink/50 block">Головной офис</span>
+                    <span className="text-xs uppercase font-bold text-ink/50 block">HQ Office</span>
                     <span className="text-sm font-semibold text-ink">Skeppsbron 14, 111 30 Stockholm, Sweden</span>
                   </div>
                 </div>
@@ -1454,7 +1454,7 @@ export default function Home() {
                     <Building size={18} />
                   </div>
                   <div>
-                    <span className="text-xs uppercase font-bold text-ink/50 block">Завод остекления</span>
+                    <span className="text-xs uppercase font-bold text-ink/50 block">Glazing Factory</span>
                     <span className="text-sm font-semibold text-ink">Vindö Industriväg 4, Gustavsberg</span>
                   </div>
                 </div>
@@ -1471,14 +1471,14 @@ export default function Home() {
                     {/* Name */}
                     <div className="flex flex-col">
                       <label className="text-[11px] uppercase font-bold text-brand mb-2">
-                        Ваше имя
+                        Contact Name
                       </label>
                       <input 
                         type="text" 
                         required
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                        placeholder="например, Эрик Ларссон"
+                        placeholder="e.g. Erik Larsson"
                         className="w-full px-4 py-3 bg-canvas border border-ink/10 focus:border-brand focus:outline-none text-sm text-ink rounded-sm"
                       />
                     </div>
@@ -1486,14 +1486,14 @@ export default function Home() {
                     {/* Phone */}
                     <div className="flex flex-col">
                       <label className="text-[11px] uppercase font-bold text-brand mb-2">
-                        Номер телефона
+                        Phone Number
                       </label>
                       <input 
                         type="tel" 
                         required
                         value={formState.phone}
                         onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
-                        placeholder="например, +7 (999) 123-45-67"
+                        placeholder="e.g. +46 8 123 45 67"
                         className="w-full px-4 py-3 bg-canvas border border-ink/10 focus:border-brand focus:outline-none text-sm text-ink rounded-sm"
                       />
                     </div>
@@ -1503,34 +1503,34 @@ export default function Home() {
                     {/* Project Area Scope */}
                     <div className="flex flex-col">
                       <label className="text-[11px] uppercase font-bold text-brand mb-2">
-                        Площадь остекления
+                        Approx Glazing Area
                       </label>
                       <select 
                         value={formState.area}
                         onChange={(e) => setFormState({ ...formState, area: e.target.value })}
                         className="w-full px-4 py-3 bg-canvas border border-ink/10 focus:border-brand focus:outline-none text-sm text-ink rounded-sm appearance-none"
                       >
-                        <option>До 20 м²</option>
-                        <option>20-50 м²</option>
-                        <option>50-100 м²</option>
-                        <option>Более 100 м² (Большая резиденция)</option>
+                        <option>Under 20 m²</option>
+                        <option>20-50 m²</option>
+                        <option>50-100 m²</option>
+                        <option>100m² + (Grand Residence)</option>
                       </select>
                     </div>
 
                     {/* Project Category */}
                     <div className="flex flex-col">
                       <label className="text-[11px] uppercase font-bold text-brand mb-2">
-                        Категория проекта
+                        Project Category
                       </label>
                       <select 
                         value={formState.projectType}
                         onChange={(e) => setFormState({ ...formState, projectType: e.target.value })}
                         className="w-full px-4 py-3 bg-canvas border border-ink/10 focus:border-brand focus:outline-none text-sm text-ink rounded-sm appearance-none"
                       >
-                        <option>Индивидуальный жилой дом</option>
-                        <option>Коммерческая недвижимость</option>
-                        <option>Историческая реновация</option>
-                        <option>Строительство виллы</option>
+                        <option>Residential Custom</option>
+                        <option>Luxe Commercial</option>
+                        <option>Historical Renovation</option>
+                        <option>New Villa Construction</option>
                       </select>
                     </div>
                   </div>
@@ -1538,13 +1538,13 @@ export default function Home() {
                   {/* Blueprint details */}
                   <div className="flex flex-col">
                     <label className="text-[11px] uppercase font-bold text-brand mb-2">
-                      Архитектурные требования / Размеры
+                      Specific Architectural Requirements / Sizes
                     </label>
                     <textarea 
                       rows="4"
                       value={formState.message}
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                      placeholder="Укажите тип рамы, размеры или другие требования..."
+                      placeholder="Detail frame core choice, custom sizes, or specific climate constraints..."
                       className="w-full px-4 py-3 bg-canvas border border-ink/10 focus:border-brand focus:outline-none text-sm text-ink rounded-sm resize-none"
                     />
                   </div>
@@ -1554,7 +1554,7 @@ export default function Home() {
                     <div className="flex items-center gap-2">
                       <Ruler size={16} className="text-brand" />
                       <span className="text-ink/80">
-                        Прикреплены параметры конфигуратора: <strong>{width}x{height}мм, {frame.name}, {glazing.name}</strong>
+                        Attaching current active simulator specs: <strong>{width}x{height}mm, {frame.name}, {glazing.name}</strong>
                       </span>
                     </div>
                   </div>
@@ -1564,7 +1564,7 @@ export default function Home() {
                     type="submit"
                     className="w-full py-4 bg-brand text-canvas font-bold uppercase tracking-wider rounded-sm hover:bg-brand-dark transition-all duration-300 flex items-center justify-center gap-2 shadow-sm shine-effect"
                   >
-                    <span>Отправить запрос спецификации</span>
+                    <span>Submit Specification Request</span>
                     <Send size={14} />
                   </button>
 
@@ -1575,26 +1575,26 @@ export default function Home() {
                   <div className="w-16 h-16 bg-brand/10 text-brand rounded-full flex items-center justify-center mb-6">
                     <CheckCircle2 size={36} />
                   </div>
-                  <h3 className="font-heading text-2xl font-bold text-ink mb-2">Запрос спецификации отправлен</h3>
+                  <h3 className="font-heading text-2xl font-bold text-ink mb-2">Specification Submitted</h3>
                   <p className="text-sm text-ink/75 max-w-md mb-8">
-                    Спасибо, {formState.name}. Ваша заявка зарегистрирована под номером <strong>#VD-{Math.floor(100000 + Math.random() * 900000)}</strong>. Наш ведущий архитектор свяжется с вами по телефону в течение 24 часов.
+                    Thank you, {formState.name}. We have logged your request under ticket <strong>#VD-{Math.floor(100000 + Math.random() * 900000)}</strong>. An architectural expert will follow up by phone within 24 business hours.
                   </p>
 
                   <div className="bg-canvas border border-brand/10 p-6 rounded-sm w-full max-w-md text-left text-xs mb-8 flex flex-col gap-3">
                     <div className="flex justify-between border-b border-brand/5 pb-2">
-                      <span className="text-ink/50 font-bold uppercase">Заказчик</span>
+                      <span className="text-ink/50 font-bold uppercase">Client</span>
                       <span className="font-semibold text-ink">{formState.name} ({formState.phone})</span>
                     </div>
                     <div className="flex justify-between border-b border-brand/5 pb-2">
-                      <span className="text-ink/50 font-bold uppercase">Объем остекления</span>
+                      <span className="text-ink/50 font-bold uppercase">Area Scope</span>
                       <span className="font-semibold text-ink">{formState.area}</span>
                     </div>
                     <div className="flex justify-between border-b border-brand/5 pb-2">
-                      <span className="text-ink/50 font-bold uppercase">Профиль рамы</span>
-                      <span className="font-semibold text-ink">{frame.name} ({width} x {height} мм)</span>
+                      <span className="text-ink/50 font-bold uppercase">Frame System</span>
+                      <span className="font-semibold text-ink">{frame.name} ({width} x {height} mm)</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-ink/50 font-bold uppercase">Система остекления</span>
+                      <span className="text-ink/50 font-bold uppercase">Glazing System</span>
                       <span className="font-semibold text-ink">{glazing.name}</span>
                     </div>
                   </div>
@@ -1606,7 +1606,7 @@ export default function Home() {
                     }}
                     className="px-6 py-2.5 border border-brand text-brand hover:bg-brand hover:text-canvas text-xs font-bold uppercase tracking-wider rounded-sm transition-all"
                   >
-                    Создать новую спецификацию
+                    Configure Another Specification
                   </button>
                 </div>
               )}
@@ -1704,7 +1704,7 @@ export default function Home() {
             <button 
               onClick={() => setActiveTechModal(null)} 
               className="absolute top-4 right-4 p-1.5 text-ink/40 hover:text-brand hover:bg-brand-light transition-all rounded-sm"
-              aria-label="Закрыть"
+              aria-label="Close"
             >
               <X size={18} />
             </button>
@@ -1714,26 +1714,26 @@ export default function Home() {
                 <div className="w-10 h-10 bg-brand-light text-brand flex items-center justify-center rounded-sm mb-5">
                   <Shield size={20} />
                 </div>
-                <h3 className="font-heading text-xl font-bold text-ink mb-3">Сертификация взломостойкости RC2</h3>
+                <h3 className="font-heading text-xl font-bold text-ink mb-3">RC2 Security &amp; Burglar Resistance</h3>
                 <p className="text-sm text-ink/75 leading-relaxed mb-5">
-                  Класс защиты RC2 (Resistance Class 2) гарантирует, что оконная конструкция способна противостоять попыткам взлома с использованием инструментов (отвертки, плоскогубцы, клинья) в течение как минимум 3 минут непрерывного физического воздействия.
+                  Resistance Class 2 (RC2) certification guarantees that the window structure can resist break-in attempts using tools like screwdrivers, pliers, and wedges for at least 3 minutes of continuous physical force.
                 </p>
                 <ul className="text-xs text-ink/70 flex flex-col gap-2">
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-brand shrink-0 mt-0.5" />
-                    <span>Противовзломные цапфы грибовидной формы по всему периметру створки.</span>
+                    <span>Mushroom-head security locking cams around the sash perimeter.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-brand shrink-0 mt-0.5" />
-                    <span>Ручка со встроенным замком и защитой от высверливания снаружи.</span>
+                    <span>Lockable handle with drill protection plates on the lock box.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-brand shrink-0 mt-0.5" />
-                    <span>Усиленное стальное армирование внутренней части рамы и створки.</span>
+                    <span>Steel reinforcement chambers inside the frame and sash profiles.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-brand shrink-0 mt-0.5" />
-                    <span>Специальная вклейка стеклопакета в створку для предотвращения выдавливания.</span>
+                    <span>Structural glass bonding (silicone glazing) preventing glass pane removal.</span>
                   </li>
                 </ul>
               </div>
@@ -1744,26 +1744,26 @@ export default function Home() {
                 <div className="w-10 h-10 bg-brand-light text-brand flex items-center justify-center rounded-sm mb-5">
                   <TreePine size={20} />
                 </div>
-                <h3 className="font-heading text-xl font-bold text-ink mb-3">Экологичная древесина PEFC &amp; FSC</h3>
+                <h3 className="font-heading text-xl font-bold text-ink mb-3">PEFC &amp; FSC Certified Forest Management</h3>
                 <p className="text-sm text-ink/75 leading-relaxed mb-5">
-                  Сертификаты PEFC (Programme for the Endorsement of Forest Certification) и FSC (Forest Stewardship Council) гарантируют строгое экологическое соответствие и восстановление лесных ресурсов.
+                  PEFC and FSC certifications guarantee that all timber materials originate from sustainably managed woodlands, supporting forest replenishment and biodiversity.
                 </p>
                 <ul className="text-xs text-ink/70 flex flex-col gap-2">
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-brand shrink-0 mt-0.5" />
-                    <span>Заготовка леса ведется исключительно в восполняемых скандинавских лесничествах.</span>
+                    <span>Sourced exclusively from replenishment-monitored Scandinavian woodlands.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-brand shrink-0 mt-0.5" />
-                    <span>100% отслеживаемость цепочки поставок сырья от лесопилки до производства.</span>
+                    <span>100% traceability from raw timber yard to the final product line.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-brand shrink-0 mt-0.5" />
-                    <span>Использование северной сосны и дуба с высокой плотностью годовых колец.</span>
+                    <span>Ultra-dense slow-growth winter-harvested pine and premium oak cores.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-brand shrink-0 mt-0.5" />
-                    <span>Вакуумная импрегнация натуральными защитными составами без вредных растворителей.</span>
+                    <span>Oiled and vacuum-impregnated using VOC-free ecological sealants.</span>
                   </li>
                 </ul>
               </div>
@@ -1774,26 +1774,26 @@ export default function Home() {
                 <div className="w-10 h-10 bg-brand-light text-brand flex items-center justify-center rounded-sm mb-5">
                   <Layers size={20} />
                 </div>
-                <h3 className="font-heading text-xl font-bold text-ink mb-3">Технология Теплого Края (Warm-Edge)</h3>
+                <h3 className="font-heading text-xl font-bold text-ink mb-3">Warm-Edge Spacer Bar Technology</h3>
                 <p className="text-sm text-ink/75 leading-relaxed mb-5">
-                  Технология «Теплого края» заменяет стандартную алюминиевую дистанционную рамку в стеклопакете на композитную полимерную с исключительно низкой теплопроводностью.
+                  Warm-Edge spacer technology replaces standard cold aluminium spacers with thin-walled polymer composite bars featuring low thermal conductivity.
                 </p>
                 <ul className="text-xs text-ink/70 flex flex-col gap-2">
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-brand shrink-0 mt-0.5" />
-                    <span>Сокращение теплопотерь по периметру стеклопакета более чем на 70%.</span>
+                    <span>Reduces edge heat loss around glass panes by over 70%.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-brand shrink-0 mt-0.5" />
-                    <span>Снижение общего коэффициента теплопередачи окна (U-value) на 10-12%.</span>
+                    <span>Lowers the overall window U-value by 10-12%.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-brand shrink-0 mt-0.5" />
-                    <span>Устранение мостиков холода и выпадения конденсата в краевой зоне стекол.</span>
+                    <span>Eliminates thermal bridges and stops interior edge condensation.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-brand shrink-0 mt-0.5" />
-                    <span>Надежная герметизация, предотвращающая утечку аргона из камер стеклопакета.</span>
+                    <span>Prevents frost build-up and mold growth near gasket lines.</span>
                   </li>
                 </ul>
               </div>
@@ -1803,7 +1803,7 @@ export default function Home() {
               onClick={() => setActiveTechModal(null)}
               className="w-full mt-6 py-2.5 bg-brand text-canvas font-bold uppercase text-xs tracking-wider rounded-sm hover:bg-brand-dark transition-colors"
             >
-              Закрыть окно
+              Close Detail
             </button>
           </div>
         </div>
