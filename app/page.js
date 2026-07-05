@@ -168,6 +168,16 @@ export default function Home() {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
 
+  // Disable automatic scroll restoration on mobile and force scroll to top on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   // Handle header background transition on scroll
   useEffect(() => {
     const handleScroll = () => {
